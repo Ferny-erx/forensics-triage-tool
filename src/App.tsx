@@ -1,25 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import EvidencePage from './pages/EvidencePage';
+import IncidentPage from './pages/IncidentPage';
+import RiskAssessmentPage from './pages/RiskAssessmentPage';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { AlertProvider } from './contexts/AlertContext';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <ThemeProvider>
+        <AlertProvider>
+          <Router>
+            <Navbar />
+            <main className="p-4">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/evidence" element={<EvidencePage />} />
+                <Route path="/incidents" element={<IncidentPage />} />
+                <Route path="/risk-assessment" element={<RiskAssessmentPage />} />
+              </Routes>
+            </main>
+            <Footer />
+          </Router>
+        </AlertProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
